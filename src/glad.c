@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include </home/obliterator/Euclid_Engine/src/glad/glad.h>
+#include <glad/glad.h>
 
 static void* get_proc(const char *namez);
 
