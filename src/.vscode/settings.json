@@ -1,0 +1,10 @@
+{
+    "makefile.extensionOutputFolder": "./.vscode",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/obliterator/Euclid_Engine/src/bin",
+            "binaryPath": "/home/obliterator/Euclid_Engine/src/bin/triangle",
+            "binaryArgs": []
+        }
+    ]
+}

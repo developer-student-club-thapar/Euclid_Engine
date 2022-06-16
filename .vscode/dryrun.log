@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/obliterator/Euclid_Engine'
+make: Leaving directory '/home/obliterator/Euclid_Engine'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

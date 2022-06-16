@@ -1,0 +1,6 @@
+make all --dry-run --keep-going --print-directory
+make: Entering directory '/home/obliterator/Euclid_Engine/src'
+make: Leaving directory '/home/obliterator/Euclid_Engine/src'
+ 
+make: *** No rule to make target 'all'.
+
