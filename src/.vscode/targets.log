@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 15 11:43:13 2022
+# Make data base, printed on Sat Jun 18 21:23:39 2022
 
 # Variables
 
@@ -225,7 +225,6 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
- 
 # Load=106/1024=10%, Rehash=0, Collisions=5/136=4%
 
 # Pattern-specific Variable Values
@@ -234,9 +233,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 66307, inode 15601265): 8 files, no impossibilities.
+# . (device 66307, inode 15601265): 16 files, no impossibilities.
 
-# 8 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -252,7 +251,7 @@ default: main
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 00:05:58.0463393
+#  Last modified 2022-06-18 21:23:31.861048982
 #  File has been updated.
 #  Successfully updated.
 
@@ -287,22 +286,23 @@ main: main.cpp
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 8):
-	g++ $(INC) main.cpp glad.c -o bin/triangle $(LIB) && clear && bin/triangle 
+	g++ $(INC) main.cpp glad.c -o bin/triangle $(LIB)  && bin/triangle 
 
 # files hash-table stats:
 # Load=8/1024=1%, Rehash=0, Collisions=0/21=0%
 # VPATH Search Paths
 
+ 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 16 / storage = 121 B / avg = 7 B
-# current buf: size = 8162 B / used = 121 B / count = 16 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 233 B / avg = 9 B
+# current buf: size = 8162 B / used = 233 B / count = 24 / avg = 9 B
 
-# strcache performance: lookups = 25 / hit rate = 36%
+# strcache performance: lookups = 33 / hit rate = 27%
 # hash-table stats:
-# Load=16/8192=0%, Rehash=0, Collisions=0/25=0%
-# Finished Make data base on Wed Jun 15 11:43:13 2022
+# Load=24/8192=0%, Rehash=0, Collisions=0/33=0%
+# Finished Make data base on Sat Jun 18 21:23:39 2022
 
  
