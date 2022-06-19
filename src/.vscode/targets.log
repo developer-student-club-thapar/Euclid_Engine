@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 18 21:23:39 2022
+# Make data base, printed on Sun Jun 19 11:50:40 2022
 
 # Variables
 
@@ -190,6 +190,7 @@ MANAGERPID = 9616
 DBUS_STARTER_BUS_TYPE = session
 # environment
 GIO_LAUNCHED_DESKTOP_FILE_PID = 87351
+ 
 # environment
 _ = /usr/bin/dbus-update-activation-environment
 # environment
@@ -251,7 +252,7 @@ default: main
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-18 21:23:31.861048982
+#  Last modified 2022-06-19 11:50:33.146313099
 #  File has been updated.
 #  Successfully updated.
 
@@ -286,23 +287,23 @@ main: main.cpp
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 8):
-	g++ $(INC) main.cpp glad.c -o bin/triangle $(LIB)  && bin/triangle 
+	g++ $(INC) main.cpp glad.c -o bin/triangle $(LIB) && bin/triangle 
 
 # files hash-table stats:
 # Load=8/1024=1%, Rehash=0, Collisions=0/21=0%
 # VPATH Search Paths
 
- 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 233 B / avg = 9 B
-# current buf: size = 8162 B / used = 233 B / count = 24 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 225 B / avg = 9 B
+# current buf: size = 8162 B / used = 225 B / count = 24 / avg = 9 B
 
 # strcache performance: lookups = 33 / hit rate = 27%
 # hash-table stats:
+ 
 # Load=24/8192=0%, Rehash=0, Collisions=0/33=0%
-# Finished Make data base on Sat Jun 18 21:23:39 2022
+# Finished Make data base on Sun Jun 19 11:50:40 2022
 
  
