@@ -1,5 +1,5 @@
 
-INC=-I $(CURDIR)
+INC=-I $(CURDIR) -I $(CURDIR)/includes
 LIB = -Wall -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor
 
 default:	main
