@@ -237,6 +237,10 @@ int main()
         glm::mat4 projection    = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        view  = glm::rotate(view, (float)(xpos) * glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
+        view  = glm::rotate(view, (float)(ypos) * glm::radians(1.0f), glm::vec3(0.1f, 0.0f, 0.0f)); 
+        view  = glm::rotate(view, (float)(input_y) * glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
+
         // pass transformation matrices to the shader
         ourShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
         ourShader.setMat4("view", view);
@@ -251,8 +255,9 @@ int main()
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
-            model = glm::rotate(model, (float)(xpos-prev_x) * glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
-            model = glm::rotate(model, (float)(ypos-prev_y) * glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
+            // model = glm::rotate(model, (float)(xpos-prev_x) * glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
+            // model = glm::rotate(model, (float)(ypos-prev_y) * glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
+model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
 
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
