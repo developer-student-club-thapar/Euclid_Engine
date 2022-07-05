@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jun 19 11:50:40 2022
+# Make data base, printed on Tue Jul  5 14:34:35 2022
 
 # Variables
 
@@ -17,15 +17,13 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-NO_AT_BRIDGE = 1
-# environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a9551ee2-41aa-412c-a5c7-1f19e97f6da4.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-af448f81-364f-4b1f-ae98-f31bb90477ab.sock
 # environment
 MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 # environment
@@ -55,7 +53,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/obliterator/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /home/obliterator/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
 LANG = C
 # environment
@@ -66,8 +64,6 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
-# environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=26a717647fc890995d86d12562a971e0
 # makefile
 CURDIR := /home/obliterator/Euclid_Engine/src
 # environment
@@ -97,19 +93,19 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 77894
+VSCODE_PID = 742169
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/obliterator-Notebook:@/tmp/.ICE-unix/9883,unix/obliterator-Notebook:/tmp/.ICE-unix/9883
+SESSION_MANAGER = local/obliterator-Notebook:@/tmp/.ICE-unix/580253,unix/obliterator-Notebook:/tmp/.ICE-unix/580253
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=26a717647fc890995d86d12562a971e0
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # makefile (from 'Makefile', line 3)
 LIB = -Wall -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor
 # automatic
@@ -135,7 +131,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/obliterator/.local/bin:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/x86/x86_energy_perf_policy:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/x86/turbostat:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/cpupower:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/perf:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/obliterator/.local/bin:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/x86/x86_energy_perf_policy:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/x86/turbostat:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/cpupower:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/perf:/home/obliterator/.local/bin:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/x86/x86_energy_perf_policy:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/x86/turbostat:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/power/cpupower:/usr/src/linux-headers-5.17.0-9.1-liquorix-amd64/tools/perf:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -143,7 +139,7 @@ LANGUAGE = en_IN:en
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 8fe3eb4f4107410cba888277ea8b30b1
+INVOCATION_ID = 0059d35638d14b5ea540469cbe471c3b
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -153,7 +149,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # automatic
 ?F = $(notdir $?)
 # makefile (from 'Makefile', line 2)
-INC = -I $(CURDIR)
+INC = -I $(CURDIR) -I $(CURDIR)/includes
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # environment
@@ -173,7 +169,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := default
 # environment
-SYSTEMD_EXEC_PID = 9883
+SYSTEMD_EXEC_PID = 580272
 # environment
 DISPLAY = :1
 # environment
@@ -185,20 +181,17 @@ DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 9616
+MANAGERPID = 579985
 # environment
-DBUS_STARTER_BUS_TYPE = session
+GIO_LAUNCHED_DESKTOP_FILE_PID = 742169
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 87351
- 
-# environment
-_ = /usr/bin/dbus-update-activation-environment
+_ = /usr/share/code/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:23943
+JOURNAL_STREAM = 8:30908
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -210,7 +203,7 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-ede14b62-1.67.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-ede14b62-1.68.1-main.sock
 # environment
 IM_CONFIG_PHASE = 1
 # default
@@ -226,7 +219,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=106/1024=10%, Rehash=0, Collisions=5/136=4%
+# Load=103/1024=10%, Rehash=0, Collisions=4/133=3%
 
 # Pattern-specific Variable Values
 
@@ -234,9 +227,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 66307, inode 15601265): 16 files, no impossibilities.
+# . (device 66307, inode 15601265): 11 files, no impossibilities.
 
-# 16 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -252,7 +245,7 @@ default: main
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-19 11:50:33.146313099
+#  Last modified 2022-06-20 11:56:01.85403167
 #  File has been updated.
 #  Successfully updated.
 
@@ -295,15 +288,15 @@ main: main.cpp
 
 # No 'vpath' search paths.
 
+ 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 225 B / avg = 9 B
-# current buf: size = 8162 B / used = 225 B / count = 24 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 19 / storage = 169 B / avg = 8 B
+# current buf: size = 8162 B / used = 169 B / count = 19 / avg = 8 B
 
-# strcache performance: lookups = 33 / hit rate = 27%
+# strcache performance: lookups = 28 / hit rate = 32%
 # hash-table stats:
- 
-# Load=24/8192=0%, Rehash=0, Collisions=0/33=0%
-# Finished Make data base on Sun Jun 19 11:50:40 2022
+# Load=19/8192=0%, Rehash=0, Collisions=0/28=0%
+# Finished Make data base on Tue Jul  5 14:34:35 2022
 
  

@@ -40,7 +40,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Euclid Engine", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -170,7 +170,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load((path+"resources/textures/container2.png").c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load((path+"resources/textures/d.png").c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
@@ -187,7 +187,7 @@ int main()
     // -------------------------------------------------------------------------------------------
     ourShader.use(); 
     ourShader.setInt("texture1", 0);
-    ourShader.setInt("texture2", 1);
+    // ourShader.setInt("texture2", 1);
 
 
 glm::mat4 model = glm::mat4(1.0f);
@@ -210,6 +210,8 @@ view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glfwGetCursorPos(window, &xpos, &ypos);
+        
+        // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         
         
         model = glm::rotate(model, (float)(xpos-prev_x) * glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
