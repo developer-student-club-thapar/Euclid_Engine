@@ -49,6 +49,7 @@ private:
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
     void loadModel(string const &path)
     {
+
         // read file via ASSIMP
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -60,6 +61,7 @@ private:
         }
         // retrieve the directory path of the filepath
         directory = path.substr(0, path.find_last_of('/'));
+
 
         // process ASSIMP's root node recursively
         processNode(scene->mRootNode, scene);
@@ -177,6 +179,7 @@ private:
         {
             aiString str;
             mat->GetTexture(type, i, &str);
+
             // check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
             bool skip = false;
             for(unsigned int j = 0; j < textures_loaded.size(); j++)
@@ -200,19 +203,24 @@ private:
         }
         return textures;
     }
-};
 
+};
+ 
 
 unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
 {
     string filename = string(path);
-    filename = directory + '/' + filename;
+    filename = directory + '/' + 'c' + 'y' +'b' +'o' +filename;
+    // std::cout<<"my log filename: "<<  filename<<std::endl;
+
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
+    stbi_set_flip_vertically_on_load(false);  
 
     int width, height, nrComponents;
     unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+
     if (data)
     {
         GLenum format;
