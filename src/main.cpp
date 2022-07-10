@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#define GLM_SWIZZLE
 
 // #include <learnopengl/filesystem.h>
 #include <learnopengl/shader_m.h>
@@ -11,6 +12,11 @@
 #include <learnopengl/model.h>
 
 #include <iostream>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include <stdio.h>
 
 #include <filesystem>
 #define STB_IMAGE_IMPLEMENTATION
@@ -70,7 +76,7 @@ int main()
         glfwTerminate();
         return -1;
     }
-    // const char* glsl_version = "#version 150";
+    const char* glsl_version = "#version 150";
 
     vector<cube> cube_list;
     for (int i = 0; i < 10; i++)
@@ -113,6 +119,38 @@ int main()
 
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
+
+    // Setup Dear ImGui context
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+        //io.ConfigViewportsNoAutoMerge = true;
+        //io.ConfigViewportsNoTaskBarIcon = true;
+
+        // Setup Dear ImGui style
+        ImGui::StyleColorsDark();
+        //ImGui::StyleColorsLight();
+
+        // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+        ImGuiStyle& style = ImGui::GetStyle();
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            style.WindowRounding = 0.0f;
+            style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+        }
+
+        // Setup Platform/Renderer backends
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplOpenGL3_Init(glsl_version);
+
+    // Our state
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     unsigned int textureID;
 glGenTextures(1, &textureID);
@@ -377,9 +415,11 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     ourShader2.setInt("texture1", 0);
 
+    
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+            static float f = 0.1f;
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -452,7 +492,6 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
         {
             // float timeValue = glfwGetTime();
             // float greenValue = (sin(timeValue));
-            cube_list[i].color = cube_list[i].color;
             ourShader2.setVec4("ourColor",cube_list[i].color);
 
 
@@ -463,7 +502,7 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
             float angle = 20.0f * i;
 
             cubes = glm::rotate(cubes, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            cubes = glm::rotate(cubes, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
+            cubes = glm::rotate(cubes, (float)glfwGetTime() * glm::radians(50.0f * (10 * f)) , glm::vec3(0.5f, 1.0f, 0.0f));  
 
             ourShader2.setMat4("model", cubes);
 
@@ -489,11 +528,91 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
         glBindVertexArray(0);
         glDepthFunc(GL_LESS); // set depth function back to default
 
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+        // if (show_demo_window)
+        //     ImGui::ShowDemoWindow(&show_demo_window);
+
+        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+        {
+            static int counter = 0;
+
+            ImGui::Begin("Editor Window");                          // Create a window called "Hello, world!" and append into it.
+
+            ImGui::Text("Cube obbject selected");    // Edit bools storing our window open/close state
+            ImGui::Checkbox("Anti-aliasing", &show_another_window);
+
+            ImGui::SliderFloat("Time acceleration", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+            
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                {
+                    counter++;
+                    if(counter == 0)
+                    {
+                        counter ++;
+                    }
+                    camera.Up = glm::vec3(0.0f, 1.0f, 0.0f);
+                    camera.Front = glm::vec3(0.0f, 0.0f, -1.0f);
+                    camera.Position = cubePositions[counter]-glm::vec3(0.0f, 0.0f, -3.0f);
+                    counter = counter%10;
+                    clear_color.x= cube_list[counter].color[0];
+                    clear_color.y= cube_list[counter].color[1];
+                    clear_color.z= cube_list[counter].color[2];
+                }
+            cube_list[counter].color = glm::vec4(clear_color.x, clear_color.y, clear_color.z, 0.0f) ;
+            ImGui::SameLine();
+            ImGui::Text("Cube %d", counter);
+
+            ImGui::Text("Application average %.0f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            ImGui::End();
+            
+        }
+
+        // 3. Show another simple window.
+        if (show_another_window)
+        {
+            ImGui::Begin("Comming soon!", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+            ImGui::Text("Hello from another window!");
+            if (ImGui::Button("Close Me"))
+                show_another_window = false;
+            ImGui::End();
+        }
+
+        // Rendering
+        ImGui::Render();
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        // glViewport(0, 0, display_w, display_h);
+        // glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        // glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    	
+        // Update and Render additional Platform Windows
+        // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+        //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
