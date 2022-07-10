@@ -41,6 +41,16 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+class cube
+{
+    // Access specifier
+    public:
+    int r=0,g=0,b=0;
+    glm::vec3 pos = glm::vec3( 0.0f,  0.0f,  0.0f);
+    glm::vec4 color = glm::vec4( 0.0f,  0.0f,  0.0f, 0.0f);
+};
+
+
 int main()
 {
     // glfw: initialize and configure
@@ -50,16 +60,40 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
+    
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "graphics render", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
+    // const char* glsl_version = "#version 150";
+
+    vector<cube> cube_list;
+    for (int i = 0; i < 10; i++)
+    {
+    cube temp;
+
+    cube_list.push_back( temp);
+    }
+
+    {
+        cube_list[0].color = glm::vec4( 0.0f/255.0f,  71.0f/255.0f,  189.0f/255.0f, 1.0f);
+        cube_list[1].color = glm::vec4( 7.0f/255.0f,  185.0f/255.0f,  217.0f/255.0f, 1.0f);
+        cube_list[2].color = glm::vec4( 0.0f/255.0f,  171.0f/255.0f,  56.0f/255.0f, 1.0f);
+        cube_list[3].color = glm::vec4( 154.0f/255.0f,  240.0f/255.0f,  0.0f/255.0f, 1.0f);
+        cube_list[4].color = glm::vec4( 255.0f/255.0f,  179.0f/255.0f,  0.0f/255.0f, 1.0f);
+        cube_list[5].color = glm::vec4( 255.0f/255.0f,  206.0f/255.0f,  0.0f/255.0f, 1.0f);
+        cube_list[6].color = glm::vec4( 255.0f/255.0f,  230.0f/255.0f,  59.0f/255.0f, 1.0f);
+        cube_list[7].color = glm::vec4( 234.0f/255.0f,  0.0f/255.0f,  52.0f/255.0f, 1.0f);
+        cube_list[8].color = glm::vec4( 255.0f/255.0f,  130.0f/255.0f,  42.0f/255.0f, 1.0f);
+        cube_list[9].color = glm::vec4( 182.0f/255.0f,  16.0f/255.0f,  245.0f/255.0f, 1.0f);
+    }
+
+
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
@@ -231,6 +265,118 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
+
+
+    // build and compile our shader program
+    // ------------------------------------
+    Shader ourShader2("7.4.camera.vs", "7.4.camera.fs");
+    // set up vertex data (and buffer(s)) and configure vertex attributes
+    // ------------------------------------------------------------------
+    float vertices[] = {
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };
+    glm::vec3 cubePositions[] = {
+        glm::vec3( -3.0f,  4.0f,  -4.0f),
+        glm::vec3( 3.0f,  5.0f, -15.0f),
+        glm::vec3(-4.0f, 2.2f, -2.5f),
+        glm::vec3(-3.0f, 2.0f, -12.3f),
+        glm::vec3( 2.4f, 0.4f, -3.5f),
+        glm::vec3(-3.0f,  3.0f, -7.5f),
+        glm::vec3( 3.0f, 2.0f, -2.5f),
+        glm::vec3( 5.0f,  2.0f, -2.5f),
+        glm::vec3( 3.0f,  0.2f, -1.5f),
+        glm::vec3(-4.0f,  1.0f, -1.5f)
+    };
+
+    unsigned int VBO2, VAO2;
+    glGenVertexArrays(1, &VAO2);
+    glGenBuffers(1, &VBO2);
+    glBindVertexArray(VAO2);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // texture coord attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+
+    // load and create a texture 
+    // -------------------------
+    unsigned int texture1;
+    // texture 1
+    // ---------
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    unsigned char *data = stbi_load((path+"resources/textures/block_solid.png").c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
+    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+    // -------------------------------------------------------------------------------------------
+    ourShader2.use(); 
+    
+
+    ourShader2.setInt("texture1", 0);
+
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -250,7 +396,7 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
         // render
         // ------
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // don't forget to enable shader before setting uniforms
@@ -285,12 +431,56 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
              glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
 
+
+
+
+
+
+         // bind textures on corresponding texture units
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+
+        // activate shader
+        ourShader2.use();
+       
+        ourShader2.setMat4("projection", projection);
+        ourShader2.setMat4("view", view);
+
+        // render boxes
+        glBindVertexArray(VAO2);
+        for (unsigned int i = 0; i < 10; i++)
+        {
+            // float timeValue = glfwGetTime();
+            // float greenValue = (sin(timeValue));
+            cube_list[i].color = cube_list[i].color;
+            ourShader2.setVec4("ourColor",cube_list[i].color);
+
+
+            glm::mat4 cubes = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+            cubes = glm::translate(cubes, cubePositions[i]);
+            cubes = glm::translate(cubes, cube_list[i].pos);
+
+            float angle = 20.0f * i;
+
+            cubes = glm::rotate(cubes, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            cubes = glm::rotate(cubes, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));  
+
+            ourShader2.setMat4("model", cubes);
+
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
+
+
+
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
         view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
         skyboxShader.setMat4("view", view);
         skyboxShader.setMat4("projection", projection);
+
+
         // skybox cube
         glBindVertexArray(skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
@@ -346,8 +536,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
-    // glViewport(width/6, height/3, width/1.5, height/1.5);
+
+
         glViewport(0, 0, width, height);
+
 
 }
 
