@@ -55,6 +55,8 @@ class cube
     glm::vec3 pos = glm::vec3( 0.0f,  0.0f,  0.0f);
     glm::vec4 color = glm::vec4( 0.0f,  0.0f,  0.0f, 0.0f);
 };
+       glm::vec3 prev_up = camera.Up;
+       glm::vec3 prev_front = camera.Front; 
 
 
 int main()
@@ -148,8 +150,8 @@ int main()
         ImGui_ImplOpenGL3_Init(glsl_version);
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
+    // bool show_demo_window = true;
+    // bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     unsigned int textureID;
@@ -372,30 +374,24 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     glBindVertexArray(VAO2);
     glBindBuffer(GL_ARRAY_BUFFER, VBO2);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // texture coord attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
 
-    // load and create a texture 
-    // -------------------------
     unsigned int texture1;
-    // texture 1
-    // ---------
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
-    // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
+
+
     int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    stbi_set_flip_vertically_on_load(true); 
+
     unsigned char *data = stbi_load((path+"resources/textures/block_solid.png").c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
@@ -544,7 +540,7 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
             ImGui::Begin("Editor Window");                          // Create a window called "Hello, world!" and append into it.
 
             ImGui::Text("Cube obbject selected");    // Edit bools storing our window open/close state
-            ImGui::Checkbox("Anti-aliasing", &show_another_window);
+            // ImGui::Checkbox("Anti-aliasing", &show_another_window);
 
             ImGui::SliderFloat("Time acceleration", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
@@ -552,14 +548,16 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
                 {
                     counter++;
+                    counter = counter%10;
                     if(counter == 0)
                     {
-                        counter ++;
+                        counter = 1;
                     }
                     camera.Up = glm::vec3(0.0f, 1.0f, 0.0f);
                     camera.Front = glm::vec3(0.0f, 0.0f, -1.0f);
+                    prev_up = camera.Up;
+                    prev_front = camera.Front;
                     camera.Position = cubePositions[counter]-glm::vec3(0.0f, 0.0f, -3.0f);
-                    counter = counter%10;
                     clear_color.x= cube_list[counter].color[0];
                     clear_color.y= cube_list[counter].color[1];
                     clear_color.z= cube_list[counter].color[2];
@@ -568,20 +566,23 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
             ImGui::SameLine();
             ImGui::Text("Cube %d", counter);
 
+            ImGui::Text("Position = (%.1f,%.1f,%.1f)",camera.Position.x,camera.Position.y,camera.Position.z );
+            ImGui::Text("Direction = (%.1f,%.1f,%.1f)",camera.Front.x,camera.Front.y,camera.Front.z );
             ImGui::Text("Application average %.0f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
             ImGui::End();
             
         }
 
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Comming soon!", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
-        }
+        // // 3. Show another simple window.
+        // if (show_another_window)
+        // {
+        //     ImGui::Begin("Comming soon!", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+        //     ImGui::Text("Hello from another window!");
+        //     if (ImGui::Button("Close Me"))
+        //         show_another_window = false;
+        //     ImGui::End();
+        // }
 
         // Rendering
         ImGui::Render();
@@ -625,6 +626,7 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 void processInput(GLFWwindow *window)
 {
+    int skip =0;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -640,12 +642,26 @@ void processInput(GLFWwindow *window)
     camera.ProcessKeyboard(UP, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             camera.ProcessKeyboard(DOWN, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS && capture == -1)
     {
+        prev_up = camera.Up;
+        prev_front = camera.Front;
+        capture = -1 * capture;
+        skip = 1;
+    }
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS && capture == 1 && skip == 0)
+    {
+        camera.Up = prev_up ;
+        camera.Front = prev_front ;
         capture = -1 * capture;
     }
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-            camera.ProcessKeyboard(LOG, deltaTime);
+            {
+                camera.Position = glm::vec3(6.3f, 4.1f, 8.5f);
+                camera.Front = glm::vec3(-0.4f, -0.1f, -0.9f);
+                prev_up = camera.Up;
+                prev_front = camera.Front;
+            }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -666,11 +682,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
-    if(capture==-1)
-    {
+
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
-
     if (firstMouse)
     {
         lastX = xpos;
@@ -684,6 +698,8 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     lastX = xpos;
     lastY = ypos;
 
+    if(capture==-1)
+    {
     camera.ProcessMouseMovement(xoffset, yoffset);
     }
 }
