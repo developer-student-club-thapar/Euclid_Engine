@@ -38,7 +38,7 @@ const unsigned int SCR_HEIGHT = 700;
 
 int capture = -1;
 // camera
-Camera camera(glm::vec3(0.0f, 3.0f, 4.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -47,14 +47,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-class cube
-{
-    // Access specifier
-    public:
-    int r=0,g=0,b=0;
-    glm::vec3 pos = glm::vec3( 0.0f,  0.0f,  0.0f);
-    glm::vec4 color = glm::vec4( 0.0f,  0.0f,  0.0f, 0.0f);
-};
+
        glm::vec3 prev_up = camera.Up;
        glm::vec3 prev_front = camera.Front; 
 
@@ -64,8 +57,10 @@ int main()
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     
@@ -79,27 +74,6 @@ int main()
         return -1;
     }
     const char* glsl_version = "#version 150";
-
-    vector<cube> cube_list;
-    for (int i = 0; i < 10; i++)
-    {
-    cube temp;
-
-    cube_list.push_back( temp);
-    }
-
-    {
-        cube_list[0].color = glm::vec4( 0.0f/255.0f,  71.0f/255.0f,  189.0f/255.0f, 1.0f);
-        cube_list[1].color = glm::vec4( 7.0f/255.0f,  185.0f/255.0f,  217.0f/255.0f, 1.0f);
-        cube_list[2].color = glm::vec4( 0.0f/255.0f,  171.0f/255.0f,  56.0f/255.0f, 1.0f);
-        cube_list[3].color = glm::vec4( 154.0f/255.0f,  240.0f/255.0f,  0.0f/255.0f, 1.0f);
-        cube_list[4].color = glm::vec4( 255.0f/255.0f,  179.0f/255.0f,  0.0f/255.0f, 1.0f);
-        cube_list[5].color = glm::vec4( 255.0f/255.0f,  206.0f/255.0f,  0.0f/255.0f, 1.0f);
-        cube_list[6].color = glm::vec4( 255.0f/255.0f,  230.0f/255.0f,  59.0f/255.0f, 1.0f);
-        cube_list[7].color = glm::vec4( 234.0f/255.0f,  0.0f/255.0f,  52.0f/255.0f, 1.0f);
-        cube_list[8].color = glm::vec4( 255.0f/255.0f,  130.0f/255.0f,  42.0f/255.0f, 1.0f);
-        cube_list[9].color = glm::vec4( 182.0f/255.0f,  16.0f/255.0f,  245.0f/255.0f, 1.0f);
-    }
 
 
     glfwMakeContextCurrent(window);
@@ -167,7 +141,6 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     Shader ourShader("1.model_loading.vs", "1.model_loading.fs");
 
     Shader skyboxShader("6.1.skybox.vs", "6.1.skybox.fs");
-    Shader shader("6.1.cubemaps.vs", "6.1.cubemaps.fs");
 
     // load models
     // -----------
@@ -175,51 +148,7 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    int y_offset= -1;
-    float cubeVertices[] = {
-        // positions          // texture Coords
-        -10.5f,y_offset -0.5f, -10.5f,  0.0f, 0.0f,
-         10.5f,y_offset -0.5f, -10.5f,  1.0f, 0.0f,
-         10.5f,y_offset +   0.5f, -10.5f,  1.0f, 1.0f,
-         10.5f,y_offset +   0.5f, -10.5f,  1.0f, 1.0f,
-        -10.5f,y_offset +   0.5f, -10.5f,  0.0f, 1.0f,
-        -10.5f,y_offset -0.5f, -10.5f,  0.0f, 0.0f,
 
-        -10.5f,y_offset -0.5f,  0.5f,  0.0f, 0.0f,
-         10.5f,y_offset -0.5f,  0.5f,  1.0f, 0.0f,
-         10.5f,y_offset +   0.5f,  0.5f,  1.0f, 1.0f,
-         10.5f,y_offset +   0.5f,  0.5f,  1.0f, 1.0f,
-        -10.5f,y_offset +   0.5f,  0.5f,  0.0f, 1.0f,
-        -10.5f,y_offset -0.5f,  0.5f,  0.0f, 0.0f,
-
-        -10.5f,y_offset +   0.5f,  10.5f,  1.0f, 0.0f,
-        -10.5f,y_offset +   0.5f, -10.5f,  1.0f, 1.0f,
-        -10.5f,y_offset -0.5f, -10.5f,  0.0f, 1.0f,
-        -10.5f,y_offset -0.5f, -10.5f,  0.0f, 1.0f,
-        -10.5f,y_offset -0.5f,  10.5f,  0.0f, 0.0f,
-        -10.5f,y_offset +   0.5f,  10.5f,  1.0f, 0.0f,
-
-         10.5f,y_offset +   0.5f,  10.5f,  1.0f, 0.0f,
-         10.5f,y_offset +   0.5f, -10.5f,  1.0f, 1.0f,
-         10.5f,y_offset -0.5f, -10.5f,  0.0f, 1.0f,
-         10.5f,y_offset -0.5f, -10.5f,  0.0f, 1.0f,
-         10.5f,y_offset -0.5f,  10.5f,  0.0f, 0.0f,
-         10.5f,y_offset +   0.5f,  10.5f,  1.0f, 0.0f,
-
-        -10.5f,y_offset -0.5f, -10.5f,  0.0f, 1.0f,
-         10.5f,y_offset -0.5f, -10.5f,  1.0f, 1.0f,
-         10.5f,y_offset -0.5f,  10.5f,  1.0f, 0.0f,
-         10.5f,y_offset -0.5f,  10.5f,  1.0f, 0.0f,
-        -10.5f,y_offset -0.5f,  10.5f,  0.0f, 0.0f,
-        -10.5f,y_offset -0.5f, -10.5f,  0.0f, 1.0f,
-
-        -10.5f,y_offset +  0.5f, -10.5f,  0.0f, 1.0f,
-         10.5f,y_offset +   0.5f, -10.5f,  1.0f, 1.0f,
-         10.5f,y_offset +   0.5f,  10.5f,  1.0f, 0.0f,
-         10.5f,y_offset +   0.5f,  10.5f,  1.0f, 0.0f,
-        -10.5f,y_offset +   0.5f,  10.5f,  0.0f, 0.0f,
-        -10.5f,y_offset +   0.5f, -10.5f,  0.0f, 1.0f
-    };
 
 
     float skyboxVertices[] = {
@@ -275,19 +204,7 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
- // cube VAO
-    unsigned int cubeVAO, cubeVBO;
-    glGenVertexArrays(1, &cubeVAO);
-    glGenBuffers(1, &cubeVBO);
-    glBindVertexArray(cubeVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
-        unsigned int cubeTexture = loadTexture((path+"resources/textures/container.jpg").c_str());
     vector<std::string> faces
     {
         (path+"resources/textures/skybox/right.jpg"),
@@ -299,9 +216,6 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     };
     unsigned int cubemapTexture = loadCubemap(faces);
     
-    shader.use();
-    shader.setInt("texture1", 0);
-
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
@@ -415,7 +329,9 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-            static float f = 0.1f;
+    static float f = 0.0f;
+    static float model_y_rotation = 0.0f;
+    static float model_x_rotation = 0.0f;
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -447,14 +363,12 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
         // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
       // cubes
-        glBindVertexArray(cubeVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, cubeTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
         //move model using this
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        
+        model = glm::rotate(model, glm::radians(f*360), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(model_y_rotation*360), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(model_x_rotation*360), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, -1.8f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
         ourModel.Draw(ourShader);
@@ -481,31 +395,6 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
        
         ourShader2.setMat4("projection", projection);
         ourShader2.setMat4("view", view);
-
-        // render boxes
-        glBindVertexArray(VAO2);
-        for (unsigned int i = 0; i < 10; i++)
-        {
-            // float timeValue = glfwGetTime();
-            // float greenValue = (sin(timeValue));
-            ourShader2.setVec4("ourColor",cube_list[i].color);
-
-
-            glm::mat4 cubes = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            cubes = glm::translate(cubes, cubePositions[i]);
-            cubes = glm::translate(cubes, cube_list[i].pos);
-
-            float angle = 20.0f * i;
-
-            cubes = glm::rotate(cubes, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            cubes = glm::rotate(cubes, (float)glfwGetTime() * glm::radians(50.0f * (10 * f)) , glm::vec3(0.5f, 1.0f, 0.0f));  
-
-            ourShader2.setMat4("model", cubes);
-
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-
-
 
 
         // draw skybox as last
@@ -542,7 +431,9 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
             ImGui::Text("Cube obbject selected");    // Edit bools storing our window open/close state
             // ImGui::Checkbox("Anti-aliasing", &show_another_window);
 
-            ImGui::SliderFloat("Time acceleration", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("Z", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("Y", &model_y_rotation, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("X", &model_x_rotation, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
             
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
@@ -558,12 +449,8 @@ glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
                     prev_up = camera.Up;
                     prev_front = camera.Front;
                     camera.Position = cubePositions[counter]-glm::vec3(0.0f, 0.0f, -3.0f);
-                    clear_color.x= cube_list[counter].color[0];
-                    clear_color.y= cube_list[counter].color[1];
-                    clear_color.z= cube_list[counter].color[2];
                 }
-            cube_list[counter].color = glm::vec4(clear_color.x, clear_color.y, clear_color.z, 0.0f) ;
-            ImGui::SameLine();
+                           ImGui::SameLine();
             ImGui::Text("Cube %d", counter);
 
             ImGui::Text("Position = (%.1f,%.1f,%.1f)",camera.Position.x,camera.Position.y,camera.Position.z );
@@ -779,3 +666,4 @@ unsigned int loadCubemap(vector<std::string> faces)
 
     return textureID;
 }
+
