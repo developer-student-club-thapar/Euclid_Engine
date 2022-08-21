@@ -1,5 +1,5 @@
 # Euclid_Engine
-A game engine project to learn OpenGL and computer graphics.
+A game engine project in OpenGL.
 ### Libraries used:
 -	GLFW (create windows, manage inputs)
 -	Glad (manages function pointers for OpenGL)
